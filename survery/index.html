@@ -17,11 +17,15 @@
             margin: 0 0 1rem 0;
             font-size: 2rem;
         }
+        .doc-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 1.5rem;
+        }
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1rem;
-            margin-top: 1.5rem;
         }
         .info-item {
             background: rgba(255,255,255,0.15);
@@ -181,6 +185,9 @@
             .survey-form {
                 padding: 1.5rem;
             }
+            .info-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
         }
     </style>
 </head>
@@ -190,8 +197,8 @@
 
         <!-- 纪录片信息 -->
         <div class="doc-info">
-            <h1>《休学》</h1>
-            <p>主要的目的是收集观看影片后的观众调研</p>
+            <h1>《休学：拉面小僧奥斯卡》</h1>
+            <div class="doc-subtitle">🎬 纪录片观众调研 · 诚邀分享你的看法</div>
             <div class="info-grid">
                 <div class="info-item">
                     <div class="info-label">片名</div>
@@ -199,16 +206,15 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">导演</div>
-                    <div class="info-value">唐建光、天夫</div>
+                    <div class="info-value">唐建光 / 天夫</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-item">
                     <div class="info-label">摄影</div>
-                    <div class="info-value">唐建光、勇哥、天夫</div>
+                    <div class="info-value">唐建光 / 勇哥 / 天夫</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">剪辑</div>
-                    <div class="info-value">天夫、唐建光</div>
+                    <div class="info-value">天夫 / 唐建光</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">片长</div>
@@ -220,14 +226,14 @@
                 <p style="margin-top: 0.5rem; line-height: 1.8;">
                     少年奥斯卡在父亲勇哥的带领下从兰州到成都求学，发现社会现场远比课堂书本更有价值，于是决定休学。从13岁到15岁，奥斯卡在辩论主持人、拉面小哥、自媒体博主等多重身份中尝试自己的未来，也在兰州、加州和成都之间寻找成长环境。他的选择，在家庭中，在朋友中，在公共空间，都引发一次次的辩论。
                 </p>
-                <p style="margin-top: 0.5rem; font-weight: bold;">
-                    🎯 本片主要目的：收集观看影片后，我们希望听到你对这一事件的看法和态度。
+                <p style="margin-top: 0.75rem; font-weight: bold; font-size: 1.05rem;">
+                    🎯 调研目的：看完影片后，我们真诚希望听到你对这一事件的看法和态度
                 </p>
             </div>
         </div>
 
         <!-- 调研表单 -->
-        <div class="survey-form section">
+        <div class="survey-form">
             <h2 class="section-title">观众调研</h2>
             <div id="message" class="message"></div>
             <form id="surveyForm">
@@ -248,7 +254,7 @@
 
                 <div class="form-group">
                     <label>
-                        你对年轻人休学选择的看法 <span class="required">*</span>
+                        你对年轻人休学这一选择的看法 <span class="required">*</span>
                     </label>
                     <div class="radio-group">
                         <label>
@@ -268,8 +274,8 @@
 
                 <div class="form-group">
                     <label>
-                        对这种教育方式的认同度 <span class="required">*</span>
-                        (1分 = 非常不认同，5分 = 非常认同)
+                        对这种教育成长方式的认同度 <span class="required">*</span><br>
+                        <small>(1分 = 非常不认同，5分 = 非常认同)</small>
                     </label>
                     <div class="rating-group">
                         <div class="rating-btn" data-rating="1">1</div>
@@ -283,15 +289,15 @@
 
                 <div class="form-group">
                     <label>
-                        具体感受和意见 <span class="required">*</span>
-                        (最少 10 个字)
+                        具体感受和意见 <span class="required">*</span><br>
+                        <small>(最少 10 个字)</small>
                     </label>
-                    <textarea name="comment" placeholder="谈谈你看完这部纪录片后的感受和想法..." minlength="10" required></textarea>
+                    <textarea name="comment" placeholder="谈谈你看完这部纪录片后的感受、想法或对这件事的看法..." minlength="10" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>
-                        是否愿意让你的孩子做类似选择？ <span class="required">*</span>
+                        如果是你，是否愿意让你的孩子做类似选择？ <span class="required">*</span>
                     </label>
                     <div class="radio-group">
                         <label>
@@ -313,7 +319,7 @@
             </form>
 
             <div class="admin-link">
-                <a href="admin.html">管理员入口</a>
+                <a href="admin.html">管理员入口 → 查看所有调研数据</a>
             </div>
         </div>
     </div>
@@ -367,7 +373,7 @@
             submissions.push(data);
             localStorage.setItem('surveySubmissions', JSON.stringify(submissions));
 
-            showMessage('调研提交成功！感谢你的参与！', 'success');
+            showMessage('✅ 调研提交成功！感谢你的参与！', 'success');
             this.reset();
             document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('ratingInput').value = '';
