@@ -6,62 +6,84 @@
     <title>纪录片调研 - 《休学》</title>
     <link rel="stylesheet" href="../style.css">
     <style>
-        .doc-info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .doc-header {
+            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
             color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        .doc-info h1 {
-            margin: 0 0 1rem 0;
-            font-size: 2rem;
+        .doc-header h1 {
+            margin: 0 0 0.75rem 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
         .doc-subtitle {
-            font-size: 1.1rem;
-            opacity: 0.95;
-            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-weight: 400;
         }
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
         }
         .info-item {
-            background: rgba(255,255,255,0.15);
-            padding: 0.75rem;
-            border-radius: 8px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.2s;
+        }
+        .info-item:hover {
+            transform: translateY(-2px);
         }
         .info-label {
-            font-size: 0.875rem;
-            opacity: 0.9;
-            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
         }
         .info-value {
             font-weight: 600;
+            font-size: 1.05rem;
         }
         .synopsis {
-            background: rgba(255,255,255,0.15);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            line-height: 1.8;
-        }
-        .survey-form {
-            background: var(--card-bg);
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
             border-radius: 12px;
-            padding: 2rem;
+            margin-top: 1.5rem;
+            line-height: 1.9;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .survey-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+        .survey-section h2 {
+            margin-top: 0;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+            font-size: 1.75rem;
         }
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             font-weight: 500;
             color: var(--text-color);
+            font-size: 1.05rem;
         }
         .form-group .required {
             color: #ef4444;
@@ -85,15 +107,16 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
+            margin-top: 0.5rem;
         }
         .radio-group label {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             cursor: pointer;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
             transition: all 0.2s;
         }
         .radio-group input:checked + span {
@@ -106,15 +129,17 @@
         .rating-group {
             display: flex;
             gap: 0.5rem;
+            margin-top: 0.5rem;
         }
         .rating-btn {
             flex: 1;
-            padding: 0.75rem;
+            padding: 1rem 0.75rem;
             text-align: center;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s;
+            font-weight: 600;
         }
         .rating-btn:hover,
         .rating-btn.active {
@@ -123,16 +148,21 @@
             border-color: var(--primary-color);
         }
         .submit-btn {
-            background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            font-size: 1rem;
+            padding: 1.25rem 2rem;
+            font-size: 1.125rem;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             width: 100%;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
         }
         .submit-btn:hover {
             transform: translateY(-2px);
@@ -176,17 +206,29 @@
             color: var(--primary-color);
         }
         @media (max-width: 768px) {
-            .doc-info {
-                padding: 1.5rem;
+            .doc-header {
+                padding: 2rem 1.5rem;
+                border-radius: 12px;
             }
-            .doc-info h1 {
+            .doc-header h1 {
+                font-size: 2rem;
+            }
+            .doc-subtitle {
+                font-size: 1.1rem;
+            }
+            .survey-section {
+                padding: 1.5rem;
+                border-radius: 12px;
+            }
+            .survey-section h2 {
                 font-size: 1.5rem;
             }
-            .survey-form {
-                padding: 1.5rem;
-            }
             .info-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 0.75rem;
+            }
+            .form-group {
+                margin-bottom: 1.5rem;
             }
         }
     </style>
@@ -233,7 +275,7 @@
         </div>
 
         <!-- 调研表单 -->
-        <div class="survey-form">
+        <div class="survey-section">
             <h2 class="section-title">观众调研</h2>
             <div id="message" class="message"></div>
             <form id="surveyForm">
