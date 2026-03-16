@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纪录片调研 - 《休学》</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .doc-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        .doc-info h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .info-item {
+            background: rgba(255,255,255,0.15);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+        .info-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-bottom: 0.25rem;
+        }
+        .info-value {
+            font-weight: 600;
+        }
+        .synopsis {
+            background: rgba(255,255,255,0.15);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            line-height: 1.8;
+        }
+        .survey-form {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .form-group .required {
+            color: #ef4444;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .radio-group input:checked + span {
+            color: var(--primary-color);
+        }
+        .radio-group label:has(input:checked) {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        .rating-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .rating-btn {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .rating-btn:hover,
+        .rating-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+            display: block;
+        }
+        .message.error {
+            background: #fecaca;
+            color: #991b1b;
+            display: block;
+        }
+        .admin-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .admin-link a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        .admin-link a:hover {
+            color: var(--primary-color);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        @media (max-width: 768px) {
+            .doc-info {
+                padding: 1.5rem;
+            }
+            .doc-info h1 {
+                font-size: 1.5rem;
+            }
+            .survey-form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../" class="back-link">← 返回个人主页</a>
+
+        <!-- 纪录片信息 -->
+        <div class="doc-info">
+            <h1>《休学》</h1>
+            <p>一部关于当代年轻人教育选择的纪录片</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">导演</div>
+                    <div class="info-value">唐建光、天夫</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">片长</div>
+                    <div class="info-value">30 分钟</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">类型</div>
+                    <div class="info-value">纪录片</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">制片国家</div>
+                    <div class="info-value">中国</div>
+                </div>
+            </div>
+            <div class="synopsis">
+                <strong>内容简介：</strong>
+                <p style="margin-top: 0.5rem; line-height: 1.8;">
+                    本片记录了一群年轻人在传统教育体系之外做出不同选择的故事。在学历内卷的时代，他们选择休学去探索自己真正热爱的方向。影片通过跟拍采访，展现了这一代年轻人对教育、成功和人生道路的重新思考，探讨教育的本质究竟是什么。
+                </p>
+            </div>
+        </div>
+
+        <!-- 调研表单 -->
+        <div class="survey-form section">
+            <h2 class="section-title">观众调研</h2>
+            <div id="message" class="message"></div>
+            <form id="surveyForm">
+                <div class="form-group">
+                    <label>
+                        姓名
+                        <span class="optional">(可选)</span>
+                    </label>
+                    <input type="text" name="name" placeholder="请输入你的姓名">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        年龄 <span class="required">*</span>
+                    </label>
+                    <input type="number" name="age" min="1" max="120" placeholder="请输入年龄" required>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        你对年轻人休学选择的看法 <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="opinion" value="支持" required>
+                            <span>支持</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="opinion" value="中立">
+                            <span>中立</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="opinion" value="反对">
+                            <span>反对</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        对这种教育方式的认同度 <span class="required">*</span>
+                        (1分 = 非常不认同，5分 = 非常认同)
+                    </label>
+                    <div class="rating-group">
+                        <div class="rating-btn" data-rating="1">1</div>
+                        <div class="rating-btn" data-rating="2">2</div>
+                        <div class="rating-btn" data-rating="3">3</div>
+                        <div class="rating-btn" data-rating="4">4</div>
+                        <div class="rating-btn" data-rating="5">5</div>
+                    </div>
+                    <input type="hidden" name="rating" id="ratingInput" required>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        具体感受和意见 <span class="required">*</span>
+                        (最少 10 个字)
+                    </label>
+                    <textarea name="comment" placeholder="谈谈你看完这部纪录片后的感受和想法..." minlength="10" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        是否愿意让你的孩子做类似选择？ <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="willing" value="是" required>
+                            <span>是</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="willing" value="否">
+                            <span>否</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="willing" value="不确定">
+                            <span>不确定</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">提交调研</button>
+            </form>
+
+            <div class="admin-link">
+                <a href="admin.html">管理员入口</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 评分点击
+        document.querySelectorAll('.rating-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('ratingInput').value = btn.dataset.rating;
+            });
+        });
+
+        // 表单提交
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleString('zh-CN'),
+                name: formData.get('name') || '(匿名)',
+                age: parseInt(formData.get('age')),
+                opinion: formData.get('opinion'),
+                rating: parseInt(formData.get('rating')),
+                comment: formData.get('comment'),
+                willing: formData.get('willing')
+            };
+
+            // 验证
+            if (!data.age || data.age < 1 || data.age > 120) {
+                showMessage('请输入有效的年龄（1-120岁）', 'error');
+                return;
+            }
+            if (!data.rating) {
+                showMessage('请选择认同度评分', 'error');
+                return;
+            }
+            if (!data.comment || data.comment.trim().length < 10) {
+                showMessage('感受文字最少需要10个字', 'error');
+                return;
+            }
+            if (!data.opinion || !data.willing) {
+                showMessage('请完成所有必填项', 'error');
+                return;
+            }
+
+            // 保存到 localStorage
+            let submissions = JSON.parse(localStorage.getItem('surveySubmissions') || '[]');
+            submissions.push(data);
+            localStorage.setItem('surveySubmissions', JSON.stringify(submissions));
+
+            showMessage('调研提交成功！感谢你的参与！', 'success');
+            this.reset();
+            document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('ratingInput').value = '';
+        });
+
+        function showMessage(text, type) {
+            const msgEl = document.getElementById('message');
+            msgEl.textContent = text;
+            msgEl.className = 'message ' + type;
+            setTimeout(() => {
+                msgEl.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

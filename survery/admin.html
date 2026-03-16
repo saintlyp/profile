@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调研管理后台 - 纪录片《休学》</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .container {
+            max-width: 1000px;
+        }
+        .login-box {
+            max-width: 400px;
+            margin: 3rem auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        .login-box h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .error {
+            color: #ef4444;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .admin-header h2 {
+            margin: 0;
+        }
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        .logout-btn:hover {
+            background: var(--bg-color);
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            color: var(--secondary-color);
+            margin-top: 0.5rem;
+        }
+        .submission-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+        .submission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .submission-meta {
+            color: var(--secondary-color);
+            font-size: 0.875rem;
+        }
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+        .submission-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .info-row {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-label {
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.25rem;
+        }
+        .info-value {
+            font-weight: 500;
+        }
+        .info-value.comment {
+            grid-column: 1 / -1;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--secondary-color);
+        }
+        .export-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+        .export-btn:hover {
+            background: #059669;
+        }
+        .actions-bar {
+            display: flex;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .submission-info {
+                grid-template-columns: 1fr;
+            }
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            .actions-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loginSection">
+            <a href="index.html" class="back-link">← 返回调研页面</a>
+            <div class="login-box">
+                <h2>管理员登录</h2>
+                <input type="password" id="passwordInput" placeholder="请输入管理员密码">
+                <button class="login-btn" onclick="login()">登录</button>
+                <div id="loginError" class="error">密码错误，请重试</div>
+            </div>
+        </div>
+
+        <div id="adminSection" style="display: none;">
+            <a href="index.html" class="back-link">← 返回调研页面</a>
+            <div class="admin-header">
+                <h2>调研数据管理</h2>
+                <div class="actions-bar">
+                    <button class="export-btn" onclick="exportCSV()">导出 CSV</button>
+                    <button class="logout-btn" onclick="logout()">退出登录</button>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">总提交量</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="supportRate">0%</div>
+                    <div class="stat-label">支持率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avgRating">0</div>
+                    <div class="stat-label">平均评分</div>
+                </div>
+            </div>
+
+            <div id="submissionsList">
+                <!-- 动态加载 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = 'admin123';
+        const STORAGE_KEY = 'surveySubmissions';
+
+        // 检查登录状态
+        if (localStorage.getItem('adminLoggedIn') === 'true') {
+            showAdmin();
+            loadSubmissions();
+        } else {
+            showLogin();
+        }
+
+        function login() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === ADMIN_PASSWORD) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                showAdmin();
+                loadSubmissions();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            location.reload();
+        }
+
+        function showLogin() {
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('adminSection').style.display = 'none';
+        }
+
+        function showAdmin() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('adminSection').style.display = 'block';
+        }
+
+        function loadSubmissions() {
+            const submissions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            const listEl = document.getElementById('submissionsList');
+            document.getElementById('totalCount').textContent = submissions.length;
+
+            if (submissions.length === 0) {
+                listEl.innerHTML = '<div class="empty-state">暂无提交数据</div>';
+                document.getElementById('supportRate').textContent = '0%';
+                document.getElementById('avgRating').textContent = '0';
+                return;
+            }
+
+            // 统计
+            const supportCount = submissions.filter(s => s.opinion === '支持').length;
+            const supportRate = Math.round((supportCount / submissions.length) * 100);
+            const avgRating = (submissions.reduce((sum, s) => sum + s.rating, 0) / submissions.length).toFixed(1);
+            document.getElementById('supportRate').textContent = supportRate + '%';
+            document.getElementById('avgRating').textContent = avgRating;
+
+            // 渲染列表，最新的在前
+            submissions.reverse().forEach((sub, index) => {
+                const item = document.createElement('div');
+                item.className = 'submission-item';
+                item.innerHTML = `
+                    <div class="submission-header">
+                        <div class="submission-meta">
+                            #${submissions.length - index} • ${sub.timestamp} • 姓名: ${sub.name}
+                        </div>
+                        <button class="delete-btn" onclick="deleteSubmission(${sub.id})">删除</button>
+                    </div>
+                    <div class="submission-info">
+                        <div class="info-row">
+                            <span class="info-label">年龄</span>
+                            <span class="info-value">${sub.age}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">看法</span>
+                            <span class="info-value">${sub.opinion}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">认同度</span>
+                            <span class="info-value">${sub.rating} / 5</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">是否愿意孩子做类似选择</span>
+                            <span class="info-value">${sub.willing}</span>
+                        </div>
+                        <div class="info-row comment">
+                            <span class="info-label">感受和意见</span>
+                            <span class="info-value">${escapeHtml(sub.comment)}</span>
+                        </div>
+                    </div>
+                `;
+                listEl.appendChild(item);
+            });
+        }
+
+        function deleteSubmission(id) {
+            if (!confirm('确定要删除这条提交吗？此操作不可撤销。')) {
+                return;
+            }
+            let submissions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            submissions = submissions.filter(s => s.id !== id);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
+            location.reload();
+        }
+
+        function exportCSV() {
+            const submissions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            if (submissions.length === 0) {
+                alert('暂无数据可导出');
+                return;
+            }
+
+            const headers = ['ID', '时间', '姓名', '年龄', '看法', '认同度', '感受', '是否愿意'];
+            const rows = submissions.map(s => [
+                s.id,
+                s.timestamp,
+                `"${s.name}"`,
+                s.age,
+                `"${s.opinion}"`,
+                s.rating,
+                `"${s.comment.replace(/"/g, '""')}"`,
+                `"${s.willing}"`
+            ]);
+
+            let csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `survey-results-${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 回车登录
+        document.getElementById('passwordInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
+</body>
+</html>
